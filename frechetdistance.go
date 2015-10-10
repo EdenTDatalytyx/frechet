@@ -137,5 +137,5 @@ func (x abstractFrechetDistance) compute() float64 {
 			}
 		}
 	}
-	return math.MaxFloat32(x.instance.distance(x.p[x.n], x.q[x.m]), math.Min(L_opt[x.n - 1][x.m - 1], B_opt[x.n - 1][x.m - 1]))
+	return math.Max(x.instance.distance(x.p[x.n], x.q[x.m]), math.Min(L_opt[x.n - 1][x.m - 1], B_opt[x.n - 1][x.m - 1]))
 }
