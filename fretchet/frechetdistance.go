@@ -12,24 +12,24 @@ type FrechetDistance interface {
 	distance(p, q []float64) float64
 }
 
-type abstractFrechetDistance struct {
+type AbstractFrechetDistance struct {
 	n, m     int
-	p, q     [][]float64
+	P, Q     [][]float64
 	instance FrechetDistance
 }
 
-func (x abstractFrechetDistance) ComputeDistance(p, q [][]float64) float64 {
-	x.p = p
-	x.q = q
-	x.n = len(x.p) - 1
-	x.m = len(x.q) - 1
+func (x AbstractFrechetDistance) ComputeDistance(p, q [][]float64) float64 {
+	x.P = p
+	x.Q = q
+	x.n = len(x.P) - 1
+	x.m = len(x.Q) - 1
 	dist := x.compute()
-	x.p = nil
-	x.q = nil
+	x.P = nil
+	x.Q = nil
 	return dist
 }
 
-func (x abstractFrechetDistance) compute() float64 {
+func (x AbstractFrechetDistance) compute() float64 {
 	column_queues := make([]*deque.Deque, x.n)
 	column_envelopes := make([]UpperEnvelope, x.n)
 	for i, _ := range column_queues {
@@ -48,7 +48,7 @@ func (x abstractFrechetDistance) compute() float64 {
 	for i, _ := range L_opt {
 		L_opt[i] = make([]float64, x.m)
 	}
-	L_opt[0][0] = x.instance.distance(x.p[0], x.q[0]);
+	L_opt[0][0] = x.instance.distance(x.P[0], x.Q[0]);
 	for j := 1; j < x.m; j++ {
 		L_opt[0][j] = math.MaxInt64;
 	}
@@ -74,7 +74,7 @@ func (x abstractFrechetDistance) compute() float64 {
 				if queue.Size() == 1 {
 					upperenv.Clear()
 				}
-				upperenv.Add(i + 1, x.q[j], x.q[j + 1], x.p[i + 1])
+				upperenv.Add(i + 1, x.Q[j], x.Q[j + 1], x.P[i + 1])
 				h := queue.Left().(int)
 				min := upperenv.FindMinimum(B_opt[h][j])
 				if h < i {
@@ -110,7 +110,7 @@ func (x abstractFrechetDistance) compute() float64 {
 				if queue.Size() == 1 {
 					upperenv.Clear()
 				}
-				upperenv.Add(i + 1, x.q[j], x.q[j + 1], x.p[i + 1])
+				upperenv.Add(i + 1, x.Q[j], x.Q[j + 1], x.P[i + 1])
 				h := queue.Left().(int)
 				min := upperenv.FindMinimum(L_opt[h][j])
 				if h < i {
@@ -137,5 +137,5 @@ func (x abstractFrechetDistance) compute() float64 {
 			}
 		}
 	}
-	return math.Max(x.instance.distance(x.p[x.n], x.q[x.m]), math.Min(L_opt[x.n - 1][x.m - 1], B_opt[x.n - 1][x.m - 1]))
+	return math.Max(x.instance.distance(x.P[x.n], x.Q[x.m]), math.Min(L_opt[x.n - 1][x.m - 1], B_opt[x.n - 1][x.m - 1]))
 }

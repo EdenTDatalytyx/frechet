@@ -275,3 +275,23 @@ func (this PolyhedralUpperEnvelope) findIntersection(fle1, fle2 FacetListElement
 	xint := (fle2.height - fle1.height) / (fle1.slope - fle2.slope);
 	return xint;
 }
+
+func (this PolyhedralUpperEnvelope) FindMinimum(constants ...float64) float64 {
+	// find min in range [0,1]
+
+	//double min = findMinimumFullProcedure();
+	min := this.findMinimumTrimmedProcedure();
+
+	for _, c := range constants {
+		min = math.Max(min, c);
+	}
+	return min;
+}
+
+func (this PolyhedralUpperEnvelope) TruncateLast() {
+	i := this.distfunc.Complexity() - 1;
+	for ; (i >= 0 && this.sortedfacets[i].slope > 0); {
+		this.sortedfacets[i].Empty()
+		i--;
+	}
+}

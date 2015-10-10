@@ -9,7 +9,7 @@ type PolyhedralDistanceFunction struct {
 	facetSqrLength []float64;
 }
 
-func newPolyhedralDistanceFunction(facets [][]float64) PolyhedralDistanceFunction {
+func NewPolyhedralDistanceFunction(facets [][]float64) PolyhedralDistanceFunction {
 	p := PolyhedralDistanceFunction{facets:facets}
 	p.facetSqrLength = make([]float64, len(facets))
 	for i := 0; i < len(p.facetSqrLength); i++ {
@@ -66,7 +66,7 @@ func Custom(facetNormals, facetPoints [][]float64, normalize bool) PolyhedralDis
 		facetdescripts[i] = vectorutil.Scale(vectorutil.DotProduct(facetNormals[i], facetPoints[i]), facetNormals[i]);
 	}
 
-	return newPolyhedralDistanceFunction(facetdescripts);
+	return NewPolyhedralDistanceFunction(facetdescripts);
 }
 func KRegular2D(k int) PolyhedralDistanceFunction {
 	if !(k >= 4 && k % 2 == 0) {
@@ -84,7 +84,7 @@ func KRegular2D(k int) PolyhedralDistanceFunction {
 		facetdescripts[i][1] = 0.5 * (math.Sin(float64(i) * alpha) + math.Sin(float64(i + 1) * alpha));
 	}
 
-	return newPolyhedralDistanceFunction(facetdescripts);
+	return NewPolyhedralDistanceFunction(facetdescripts);
 }
 
 func EpsApproximation2D(eps float64) PolyhedralDistanceFunction {
@@ -126,7 +126,7 @@ func LInfinity(dimensions int) PolyhedralDistanceFunction {
 		}
 	}
 
-	return newPolyhedralDistanceFunction(facetdescripts);
+	return NewPolyhedralDistanceFunction(facetdescripts);
 }
 
 func Round(x float64) float64 {
@@ -172,7 +172,7 @@ func L1(dimensions int) PolyhedralDistanceFunction {
 		totalblock = halfblock;
 	}
 
-	return newPolyhedralDistanceFunction(facetdescripts);
+	return NewPolyhedralDistanceFunction(facetdescripts);
 }
 
 
