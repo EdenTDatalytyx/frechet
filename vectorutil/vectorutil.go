@@ -1,9 +1,17 @@
 package vectorutil
-import "math"
+import (
+	"math"
+	"fmt"
+)
 
 
 func SquaredLength(A []float64) float64 {
-	return DotProduct(A, A)
+	var sum float64;
+	for i := 0; i < len(A); i++ {
+		sum += A[i] * A[i];
+	}
+	fmt.Printf("Squared Length of %s: %f\n", A, sum)
+	return sum
 }
 
 func Add(A, B []float64) []float64 {
@@ -41,6 +49,7 @@ func DotProduct(A, B []float64) float64 {
 }
 
 func Distance(A, B []float64) float64 {
+	fmt.Printf("Check distance A,B == %s,%s", A, B)
 	return Length(Subtract(B, A))
 }
 

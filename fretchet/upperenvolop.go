@@ -7,6 +7,7 @@ import (
 	"github.com/artpar/frechet/vectorutil"
 	"reflect"
 	"math"
+	"fmt"
 )
 
 type UpperEnvelope interface {
@@ -18,13 +19,14 @@ type UpperEnvelope interface {
 }
 
 type facetList struct {
-	deque.Deque
+	*deque.Deque
 	facet int
 	slope float64
 }
 
 func newFacetList(facet int, slope float64) facetList {
 	f := facetList{facet:facet, slope: slope}
+	f.Deque = deque.New()
 	return f
 }
 
@@ -58,9 +60,9 @@ type FacetListElement struct {
 	slope  float64
 }
 
-
-
 func (this PolyhedralUpperEnvelope) Add(i int, P1, P2, Q []float64) {
+	fmt.Printf("p1,P1 == %s,%s\n", this.p1, P1)
+	// fmt.Printf("p2,P2 == %s,%s\n", this.p2, P2)
 	if !(reflect.DeepEqual(this.p1, P1)) {
 		panic("p1 is not equal to P1")
 	}
@@ -69,7 +71,6 @@ func (this PolyhedralUpperEnvelope) Add(i int, P1, P2, Q []float64) {
 	}
 
 	for f := 0; f < this.distfunc.Complexity(); f++ {
-
 		fl := this.sortedfacets[f];
 
 		fle := FacetListElement{index:i};
