@@ -1,5 +1,4 @@
 package frechet
-import "fmt"
 
 type PolyhedralFrechetDistance struct {
 	AbstractFretchetDistance
@@ -20,11 +19,11 @@ func (this PolyhedralFrechetDistance) distance(p, q []float64) float64 {
 
 
 func (this PolyhedralFrechetDistance) initializeRowUpperEnvelope(row int, Q [][]float64) UpperEnvelope {
-	fmt.Printf("initializeRowUpperEnvelope(%d) - Q == %s\n", row, Q)
+	// fmt.Printf("initializeRowUpperEnvelope(%d) - Q == %s\n", row, Q)
 	return NewPolyhedralUpperEnvelope(this.distfunc, Q[row], Q[row + 1]);
 }
 
 func (this PolyhedralFrechetDistance) initializeColumnUpperEnvelope(column int, P [][]float64) UpperEnvelope {
-	fmt.Printf("initializeColumnUpperEnvelope(%d) - P == %s\n", column, P)
+	// fmt.Printf("initializeColumnUpperEnvelope(%d) - P == %s\n", column, P)
 	return NewPolyhedralUpperEnvelope(this.distfunc, P[column], P[column + 1]);
 }

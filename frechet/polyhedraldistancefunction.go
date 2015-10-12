@@ -2,7 +2,7 @@ package frechet
 import (
 	"math"
 	"github.com/artpar/frechet/vectorutil"
-	"fmt"
+	// "fmt"
 )
 
 type PolyhedralDistanceFunction struct {
@@ -14,7 +14,7 @@ func NewPolyhedralDistanceFunction(facets [][]float64) PolyhedralDistanceFunctio
 	p := PolyhedralDistanceFunction{facets:facets}
 	p.facetSqrLength = make([]float64, len(facets))
 	for i := 0; i < len(p.facetSqrLength); i++ {
-		fmt.Printf("Get squared length for - %s\n", p.facets[i])
+		// fmt.Printf("Get squared length for - %s\n", p.facets[i])
 		p.facetSqrLength[i] = vectorutil.SquaredLength(p.facets[i]);
 	}
 	return p
@@ -152,14 +152,14 @@ func L1(dimensions int) PolyhedralDistanceFunction {
 	}
 
 	k := int(Round(math.Pow(2, float64(dimensions))));
-	fmt.Printf("K : %d\n", k)
+	// fmt.Printf("K : %d\n", k)
 	facetdescripts := make([][]float64, k);
 	for i, _ := range facetdescripts {
 		facetdescripts[i] = make([]float64, dimensions)
 	}
 
 	val := 1.0 / float64(dimensions);
-	fmt.Printf("val : %f\n", val)
+	// fmt.Printf("val : %f\n", val)
 
 	totalblock := k;
 	for d := 0; d < dimensions; d++ {
@@ -175,7 +175,7 @@ func L1(dimensions int) PolyhedralDistanceFunction {
 
 		totalblock = halfblock;
 	}
-	fmt.Printf("Construct for %s\n", facetdescripts);
+	// fmt.Printf("Construct for %s\n", facetdescripts);
 	return NewPolyhedralDistanceFunction(facetdescripts);
 }
 

@@ -1,6 +1,7 @@
 package main
 import (
 	fretchet "github.com/artpar/frechet/frechet"
+// "fmt"
 	"fmt"
 )
 

@@ -3,7 +3,7 @@ package frechet
 import (
 	"github.com/artpar/frechet/deque"
 	"math"
-	"fmt"
+// "fmt"
 )
 
 type FrechetDistance interface {
@@ -22,7 +22,7 @@ type AbstractFretchetDistance struct {
 func (x AbstractFretchetDistance) ComputeDistance(p, q [][]float64) float64 {
 	x.P = p
 	x.Q = q
-	fmt.Printf("P, Q = %s, %s\n", x.P, x.Q)
+	// fmt.Printf("P, Q = %s, %s\n", x.P, x.Q)
 	x.n = len(x.P) - 1
 	x.m = len(x.Q) - 1
 	dist := x.compute()
@@ -36,14 +36,14 @@ func (x AbstractFretchetDistance) compute() float64 {
 	column_envelopes := make([]UpperEnvelope, x.n)
 	for i, _ := range column_queues {
 		column_queues[i] = deque.New()
-		fmt.Printf("compute(%d) - P, Q == %s, %s\n", i, x.P, x.Q)
+		// fmt.Printf("compute(%d) - P, Q == %s, %s\n", i, x.P, x.Q)
 		column_envelopes[i] = x.initializeColumnUpperEnvelope(i, x.P)
 	}
 	row_queues := make([]*deque.Deque, x.m)
 	row_envelopes := make([]UpperEnvelope, x.m)
 	for i, _ := range row_queues {
 		temp := deque.New()
-		fmt.Printf("rowQueues(%d) P,Q == %s, %s\n", i)
+		// fmt.Printf("rowQueues(%d) P,Q == %s, %s\n", i)
 		row_queues[i] = temp
 		row_envelopes[i] = x.initializeRowUpperEnvelope(i, x.Q)
 	}
@@ -65,8 +65,8 @@ func (x AbstractFretchetDistance) compute() float64 {
 	for j := 1; j < x.n; j++ {
 		B_opt[j][0] = math.MaxFloat64;
 	}
-	fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
-	fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
+	// fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
+	// fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
 
 
 	for i := 0; i < x.n; i++ {
@@ -143,13 +143,13 @@ func (x AbstractFretchetDistance) compute() float64 {
 				upperenv.TruncateLast();
 			}
 		}
-		fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
-		fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
+		// fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
+		// fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
 	}
 	distance := x.distance(x.P[x.n], x.Q[x.m])
-	fmt.Printf("Distance - %f\n", distance);
-	fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
-	fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
+	// fmt.Printf("Distance - %f\n", distance);
+	// fmt.Printf("Min1 - %f\n", L_opt[x.n - 1][x.m - 1]);
+	// fmt.Printf("Min2 - %f\n", B_opt[x.n - 1][x.m - 1]);
 
 	return math.Max(distance, math.Min(L_opt[x.n - 1][x.m - 1], B_opt[x.n - 1][x.m - 1]))
 }

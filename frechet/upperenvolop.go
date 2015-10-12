@@ -7,7 +7,7 @@ import (
 	"github.com/artpar/frechet/vectorutil"
 	"reflect"
 	"math"
-	"fmt"
+	// "fmt"
 )
 
 type UpperEnvelope interface {
@@ -61,8 +61,8 @@ type FacetListElement struct {
 }
 
 func (this PolyhedralUpperEnvelope) Add(i int, P1, P2, Q []float64) {
-	fmt.Printf("p1,P1 == %s,%s\n", this.p1, P1)
-	// fmt.Printf("p2,P2 == %s,%s\n", this.p2, P2)
+	// fmt.Printf("p1,P1 == %s,%s\n", this.p1, P1)
+	// // fmt.Printf("p2,P2 == %s,%s\n", this.p2, P2)
 	if !(reflect.DeepEqual(this.p1, P1)) {
 		panic("p1 is not equal to P1")
 	}
