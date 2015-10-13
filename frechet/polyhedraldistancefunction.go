@@ -148,7 +148,7 @@ func Round(x float64) float64 {
 
 func L1(dimensions int) PolyhedralDistanceFunction {
 	if !(dimensions >= 2) {
-		panic("dimennsions should be more then or equal to 2")
+		panic("dimensions should be more then or equal to 2")
 	}
 
 	k := int(Round(math.Pow(2, float64(dimensions))));

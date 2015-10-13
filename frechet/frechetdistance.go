@@ -22,7 +22,7 @@ type AbstractFretchetDistance struct {
 func (x AbstractFretchetDistance) ComputeDistance(p, q [][]float64) float64 {
 	x.P = p
 	x.Q = q
-	// fmt.Printf("P, Q = %s, %s\n", x.P, x.Q)
+//	fmt.Printf("P, Q = %s, %s\n", x.P, x.Q)
 	x.n = len(x.P) - 1
 	x.m = len(x.Q) - 1
 	dist := x.compute()
@@ -91,7 +91,7 @@ func (x AbstractFretchetDistance) compute() float64 {
 				first := queue.PopLeft()
 				for queue.Size() > 1 && B_opt[queue.Left().(int)][j] <= min {
 					h := queue.Left().(int)
-					if h <= i {
+					if !(h <= i) {
 						panic("h !<= i")
 					}
 					upperenv.RemoveUpto(h)
@@ -110,7 +110,7 @@ func (x AbstractFretchetDistance) compute() float64 {
 			if j < x.m - 1 {
 				queue := column_queues[i]
 				upperenv := column_envelopes[i]
-				for queue.Size() > 0 && L_opt[queue.Right().(int)][i] > L_opt[i][j] {
+				for queue.Size() > 0 && L_opt[i][queue.Right().(int)] > L_opt[i][j] {
 					queue.PopRight()
 				}
 				queue.PushRight(j)
@@ -127,12 +127,12 @@ func (x AbstractFretchetDistance) compute() float64 {
 				first := queue.PopLeft()
 				for queue.Size() > 1 && L_opt[i][queue.Left().(int)] <= min {
 					h := queue.Left().(int)
-					if h <= j {
+					if !(h <= j) {
 						panic("h !<= j")
 					}
 					upperenv.RemoveUpto(h)
 					min = upperenv.FindMinimum(L_opt[i][h])
-					if h < i {
+					if h < j {
 						min = upperenv.FindMinimum(B_opt[i][j], L_opt[i][h])
 					}
 					first = queue.PopLeft()
